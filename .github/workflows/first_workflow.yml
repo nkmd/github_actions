@@ -7,3 +7,8 @@ jobs:
     steps:                    
       - name: Display some Text
         run: echo "__Some Text__"
+      - name: Command in Multeline
+        run: | 
+          node -v
+          npm -v
+
