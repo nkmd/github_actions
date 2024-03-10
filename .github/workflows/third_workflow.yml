@@ -1,3 +1,6 @@
+# Копирует файлы из репозитория GitHub в Рабочий каталог VM.
+# - uses: actions/checkout@v4 (скрипт https://github.com/actions/checkout)
+
 name: Third Workflow
 on: push
 
@@ -8,3 +11,5 @@ jobs:
       - name: _List Files and Copy Repo_
         run: ls -a
       - uses: actions/checkout@v4
+      - name: _List Files after copy, in VM_
+        run: ls -a
