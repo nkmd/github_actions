@@ -1,4 +1,4 @@
-# № 3 РУЧНОЙ ("Git File Copy") и скриптом ("checkout")
+# №3 РУЧНОЙ ("Git File Copy") и скриптом ("checkout")
 # Копирует файлы из репозитория GitHub в Рабочий каталог VM.
 # - uses: actions/checkout@v4 (скрипт https://github.com/actions/checkout)
 
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: List Files
-        run: lsfgf -a
+        run: ls -a
       #- uses: actions/checkout@v4
       - name: Copy Files
         run: |
