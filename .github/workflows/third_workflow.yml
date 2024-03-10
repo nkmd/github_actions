@@ -11,6 +11,5 @@ jobs:
       - name: _List Files and Copy Repo_
         run: ls -a
       - uses: actions/checkout@v4
-      - name: _List Files and Copy Repo_
-        run: List Files after Copy
-      - uses: ls -a
+      - name: _List Files after Copy_
+      - run: ls -a
