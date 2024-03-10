@@ -9,4 +9,4 @@ jobs:
       - name: _Github Work Dir_
         run: |
           pwd
-          npm -v
+          ls -a
