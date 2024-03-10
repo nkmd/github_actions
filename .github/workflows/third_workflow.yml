@@ -1,0 +1,12 @@
+# Github Work Dir
+name: Third Workflow
+on: push
+
+jobs:
+  run-first-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: _Github Work Dir_
+        run: |
+          pwd
+          npm -v

@@ -1,3 +1,5 @@
+# первый пример
+# запуск в ручную
 name: First Workflow         
 on: workflow_dispatch          
 
