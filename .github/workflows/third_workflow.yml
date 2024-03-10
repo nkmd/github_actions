@@ -1,4 +1,6 @@
-# Github Work Dir
+# Копирует файлы из репозитория GitHub в Рабочий каталог VM.
+# - uses: actions/checkout@v4 (скрипт https://github.com/actions/checkout)
+
 name: Third Workflow
 on: push
 
@@ -6,7 +8,9 @@ jobs:
   run-first-command:
     runs-on: ubuntu-latest
     steps:
-      - name: _Github Work Dir_
-        run: |
-          pwd
-          ls -a
+      - name: _List Files and Copy Repo_
+        run: ls -a
+      - uses: actions/checkout@v4
+      - name: _List Files and Copy Repo_
+        run: List Files after Copy
+      - uses: ls -a
