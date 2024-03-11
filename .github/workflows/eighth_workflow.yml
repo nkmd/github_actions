@@ -1,5 +1,7 @@
 # №8 Триггер 'workflow_dispatch' (ручной запуск) и передача параметров через inputs
-# 
+# workflow_dispatch: - запуск в ручном режиме.
+# inputs: - объект полей (string, choice, boolean).
+# документация по типам полей: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch
 
 name: Eighth Workflow
 on: 
