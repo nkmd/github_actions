@@ -1,0 +1,22 @@
+# №4 Данный Workflow '..\fourth_workflow.yml' запустится ТОЛЬКО ПОСЛЕ того как,
+# завершится 3й Workflow: [Third Workflow] '..\third_workflow.yml'
+# проверка на успех №3, и как результат - дальнейшие действия.
+
+name: Fourth Workflow
+on:
+  workflow_run:
+    workflows: [Third Workflow]
+    types:
+      - completed
+
+jobs:
+  success-command:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - run: echo "Success - Third Workflow, begin Third Workflow."
+  failure-command:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - run: echo "Faild - Third Workflow, stop." 
