@@ -1,10 +1,37 @@
 # №5 Типы триггеров (Events)
 # документация по 'Event':
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
+#
+# $GITHUB_SHA - ID Коммита
+# $GITHUB_REF - Ветка
 
 # ######################
+# -подход 'Event-ов' НЕ ОЧЕНЬ практический, Срабатывает всегда, 
+# 'pull_request' либо 'issues'. Имеет много "ативити тайпов"
+# Вариант 1
+# name: Fifth Workflow
+# on: [push, issues, pull_request]
+
+# jobs:
+#   run-first-command:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Event Vars
+#         run: |
+#           echo $GITHUB_SHA 
+#           echo $GITHUB_REF
+
+# ######################
+# - Конкретно Для написания 'workflows' требуется использования конкретного типа.
+# - Запуск: 'issues' при редактировании и удалении. 
+# - Запуск: 'pull_request' на прикрипление отв. лица и на закрытие.
+# Вариант 2 
 name: Fifth Workflow
-on: [push, issues, pull_request]
+on: 
+  issues:
+    types: [edited, deleted]
+  pull_request:
+    types: [assigned, closed]
 
 jobs:
   run-first-command:
@@ -14,20 +41,3 @@ jobs:
         run: |
           echo $GITHUB_SHA
           echo $GITHUB_REF
-
-# ###################### 
-# name: Fifth Workflow
-# on: 
-#   issues:
-#     types: [edited, deleted]
-#   pull_request:
-#     types: [assigned, closed]
-
-# jobs:
-#   run-first-command:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Event Vars
-#         run: |
-#           echo $GITHUB_SHA
-#           echo $GITHUB_REF
