@@ -1,0 +1,17 @@
+# №9 Исполнение Workflow по триггеру 'repository_dispatch'
+# Назначение - запускать 'repository_dispatch' только с внешнего ресурса, 
+# кнопки на стороне 'Github Action' - нет.
+# https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#create-a-repository-dispatch-event
+# [test] - "активити тайп для связи"
+
+name: Nineth Workflow
+on: 
+  repository_dispatch:
+    types: [test]
+
+jobs:
+  run-first-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Event Vars
+        run: echo ${{ github.event.client_payload.titleTest }}
