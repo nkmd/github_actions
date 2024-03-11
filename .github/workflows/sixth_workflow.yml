@@ -2,11 +2,11 @@
 # документация по 'Filter pattern':
 # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
 #
-# При действии "push:", СРАБАТЫВАТЬ НА:
-#   В коде нельзя использовать одновременно 'branches:' и 'branches-ignore:'
+# При действии "push:"
+#  (В коде нельзя использовать одновременно 'branches:' и 'branches-ignore:')
 #   branches: наблюдать указанную ветку 'main', "page/*", ...
-#   tags:  на определённые ТЭГИ (версии)
-#   paths: отслеживать изменения Тольо в определённых локациях, файлах. И СРАБАТЫВАТЬ.
+#   tags:  реагировть на определённые ТЭГИ (версии)
+#   paths: отслеживать изменения в определённых локациях, файлах. И СРАБАТЫВАТЬ!
 
 name: Six Workflow
 on: 
