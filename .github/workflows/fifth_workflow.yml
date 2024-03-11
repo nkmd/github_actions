@@ -1,0 +1,33 @@
+# №5 Типы триггеров (Events)
+# документация по 'Event':
+# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
+
+# ######################
+name: Fifth Workflow
+on: [push, issues, pull_request]
+
+jobs:
+  run-first-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Event Vars
+        run: |
+          echo $GITHUB_SHA
+          echo $GITHUB_REF
+
+# ###################### 
+# name: Fifth Workflow
+# on: 
+#   issues:
+#     types: [edited, deleted]
+#   pull_request:
+#     types: [assigned, closed]
+
+# jobs:
+#   run-first-command:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Event Vars
+#         run: |
+#           echo $GITHUB_SHA
+#           echo $GITHUB_REF
