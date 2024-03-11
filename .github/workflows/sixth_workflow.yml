@@ -1,0 +1,32 @@
+# №6 Применение дополнительных фильтров при работе с 'Event'
+# документация по 'Filter pattern':
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
+#
+# При действии "push:", СРАБАТЫВАТЬ НА:
+#   В коде нельзя использовать одновременно 'branches:' и 'branches-ignore:'
+#   branches: СТРОГО указанную ветку 'main', "page/*", ...
+#   tags:  на определённые ТЭГИ (версии)
+#   paths: отслеживать изменения в определённых локациях, файлах
+
+name: Six Workflow
+on: 
+  push:
+    branches:
+      - main
+      - "page/*" # page/about page/blog page/contact 
+      - "page/**" # page/category/lifestyle
+      - "!page/blog"
+    #tags:
+    #  - "v1.*" # v1.1 v1.1.2
+    #  - "!v1.2.1"
+    paths:
+      - "**.html"
+
+jobs:
+  run-first-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Event Vars
+        run: |
+          echo $GITHUB_SHA
+          echo $GITHUB_REF
