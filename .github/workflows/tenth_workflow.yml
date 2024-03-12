@@ -1,18 +1,22 @@
 # №10 Оператор if, выражения, контексты в GitHub Actions
 #
+# run-name: "Display Context Info"  - передать кастомный заголовок (отличный от комита)
+# id: context-expression            -  для поиска в логах
+# echo '${{ toJson(github) }}'      -   выражение
+#
 # Вывод в консоль в формате JSON, то что передаём.
 
 name: Ten Workflow
 on: [push]
-# run-name: "Display Context Info"      # передать кастомный заголовок (комита)
+run-name: "Display Context Info" 
 jobs:
   run-first-command:
     runs-on: ubuntu-latest
     steps:
       - name: Contexts and Expressions
-        id: context-expression         # для поиска в логах
+        id: context-expression
         run: |
-          echo '${{ toJson(github) }}' # выражение
+          echo '${{ toJson(github) }}'
           echo '${{ toJson(runner) }}'
           echo '${{ toJson(job) }}'
           echo '${{ toJson(steps) }}'
