@@ -11,9 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: First Step
-        run: sleep 30         # чтобы успеть нажать кнопку в 'GitHub Action'.
-      - name: Runs on Canceled
-				if: ${{ cancelled() }} # вернёт 'true' если предидущие шаги были отменены. 
+        run: sleep 30                 # чтобы успеть нажать кнопку в 'GitHub Action'.
       - name: Runs on Canceled
         if: ${{ cancelled() }}        # вернёт 'true' если предидущие шаги были отменены.
         run: echo "Runs on Canceled"
