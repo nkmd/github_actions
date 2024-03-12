@@ -1,0 +1,22 @@
+# №12 Секреты (secrets) в GitHub Actions
+# Переменные которые должны быть доступны во ВСЕХ ФАЙЛАХ 'Workflow'
+# 
+# 'Secrets' - похоже на переменные, но инф-я в них шифруется (пути, логины, пароли, ...).
+# 'Variables' - для хранения простой инф.
+# 'Variables' 'Secrets' бывают для 'Environment' так и для 'Repository'
+#
+# Получаем значение переменных созданных нами на Github Actions,
+# в 'Secrets and variables' и в 'Environments'
+
+name: Twelve Workflow
+on: [push]
+
+jobs:
+  run-first-command:
+    runs-on: ubuntu-latest
+    environment: "staging"              # обращаться к 'Environment'
+    steps:
+      - name: Our Vars & Secrets
+        run: |
+          echo '${{ vars.STATUS }}'      # обращение к переменной 'STATUS'
+          echo '${{ secrets.PASSWORD }}' # обращение к секрет 'PASSWORD'
