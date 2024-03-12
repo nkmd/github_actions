@@ -1,0 +1,28 @@
+# №13 Функции и GitHub Actions
+#
+#
+
+name: Thirteenth Workflow
+on: push
+
+jobs:
+  # failure() success() always() cancelled()
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: First Step
+        run: sleep 30         # чтобы успеть нажать кнопку в 'GitHub Action'.
+      - name: Runs on Canceled
+				if: ${{ cancelled() }} # вернёт 'true' если предидущие шаги были отменены. 
+      - name: Runs on Canceled
+        if: ${{ cancelled() }}        # вернёт 'true' если предидущие шаги были отменены.
+        run: echo "Runs on Canceled"
+      - name: Runs on any case
+        if: ${{ always() }}           # возвращает 'true' при любом состоянии.
+        run: echo "Runs on any case"
+      - name: Runs on Success
+        if: ${{ success() }}          # шаг удачный.
+        run: echo "Runs on Success"
+      - name: Runs on Failure
+        if: ${{ failure() }}  # шаг не удачный.
+        run: echo "Runs on Failure"
