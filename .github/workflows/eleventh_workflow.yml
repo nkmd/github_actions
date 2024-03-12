@@ -17,18 +17,18 @@ jobs:
     env:
       JOB_CUSTOM_VAR: JOB 1
     steps:
-      - name: Set New Var
-        run: echo "NEW_CUSTOM_VAR=New Value" >> "$GITHUB_ENV"
-      - name: Vars
+      - name: Set New Var                 # название шага 'Set New Var'
+        run: echo "NEW_CUSTOM_VAR=New Value" >> "$GITHUB_ENV"  # вывод эхо, как есть.
+      - name: Vars                        # название шага 'Vars'
         env:
           STEP_CUSTOM_VAR: STEP 1
           # переопредилили знач.:
           WF_CUSTOM_VAR: WF 1 - STEP 2
         run: |
-          echo $GITHUB_REF
-          echo '${{ github.ref }}'
-          echo $WF_CUSTOM_VAR             # способ 1.
-          echo '${{ env.WF_CUSTOM_VAR }}' # способ 2.
-          echo $JOB_CUSTOM_VAR
-          echo $STEP_CUSTOM_VAR
-          echo $NEW_CUSTOM_VAR
+          echo $GITHUB_REF                # refs/heads/main
+          echo '${{ github.ref }}'        # refs/heads/main
+          echo $WF_CUSTOM_VAR             # способ 1. 'WF 1 - STEP 2'
+          echo '${{ env.WF_CUSTOM_VAR }}' # способ 2. 'WF 1 - STEP 2'
+          echo $JOB_CUSTOM_VAR            # 'JOB 1'
+          echo $STEP_CUSTOM_VAR           # 'STEP 1'
+          echo $NEW_CUSTOM_VAR            # 'New Value'
