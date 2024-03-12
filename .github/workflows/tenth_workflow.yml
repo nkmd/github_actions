@@ -4,7 +4,7 @@
 
 name: Ten Workflow
 on: [push]
-run-name: "Display Context Info"
+# run-name: "Display Context Info"      # передать кастомный заголовок (комита)
 jobs:
   run-first-command:
     runs-on: ubuntu-latest
