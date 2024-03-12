@@ -1,4 +1,8 @@
 # №10 Оператор if, выражения, контексты в GitHub Actions
+# ( IF смотри в \.github\workflows\fourth_workflow.yml )
+#
+# Контексты: https://docs.github.com/en/actions/learn-github-actions/contexts
+# Операторы: https://docs.github.com/en/actions/learn-github-actions/expressions
 #
 # run-name: "Display Context Info"  - передать кастомный заголовок (отличный от комита)
 # id: context-expression            -  для поиска в логах
