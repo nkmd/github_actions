@@ -14,7 +14,7 @@ on: [push]
 jobs:
   run-first-command:
     runs-on: ubuntu-latest
-    environment: "staging"              # обращаться к 'Environment'
+    environment: "staging"               # обр-ся к 'Environment':'staging', иначе не указывать.
     steps:
       - name: Our Vars & Secrets
         run: |
