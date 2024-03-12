@@ -40,7 +40,7 @@ jobs:
     steps:
       - name: Failure Step
         id: error-step
-        run: exit 1
+        run: exit 1                   # 'ВЫХОД' - имитация прерывания прогр.
       - name: Runs on Canceled
         if: ${{ cancelled() }}        # вернёт 'true' если предидущие шаги были отменены.
         run: echo "Runs on Canceled"
@@ -53,9 +53,9 @@ jobs:
       - name: Runs on Failure
         if: ${{ failure() && steps.error-step.conclusion == 'failure' }}  # шаг не удачный.
         run: echo "Runs on Failure"
-  second-job:
+  second-job:                         # второй 'second-job:' зависит от первого 'job:'
     runs-on: ubuntu-latest
-    needs: job
-    if: ${{ failure() }}
+    needs: job                        # зависимость
+    if: ${{ failure() }}              # выполнить если неудачен первый 'job:'
     steps:
       - run: echo "Job was failed"
