@@ -42,7 +42,7 @@ jobs:
         with:
           path: ~/.npm
           # ключ по которому находит файл с кэшем, и обновит кэш если есть изменения:
-          key: ${{ runner.os }}-cache-file-${{ hashFiles('../package-lock.json') }}
+          key: ${{ runner.os }}-cache-file-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-cache-file-
             ${{ runner.os }}-
