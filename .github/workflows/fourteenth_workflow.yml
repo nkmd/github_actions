@@ -20,7 +20,7 @@ jobs:
           path: ~/.npm
           key: "cache-file"      # имя файла, ключ по которому в дальнейшем находит файл с кэшем
       - name: Display Cache      # Отобразим, чтоб увидеть.continue-on-error: 
-        run: echo '${{ steps.cache-step.outputs}}'
+        run: echo '${{ toJson(steps.cache-step.outputs) }}'
       - name: Install node_modules # установка модулей node_modules
         run: npm install
 
