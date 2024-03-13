@@ -1,6 +1,7 @@
 # №13 Функции и GitHub Actions
 #
-#
+# Документация:
+# https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions
 
 #####################################
 # ::: Для проврки по нажатию кнопки 'отмены' в 'GitHub Action' :::
@@ -29,7 +30,7 @@
 #         run: echo "Runs on Failure"
 
 ################################
-#
+# Выполнять 'second-job:' только если первый 'job:' провален.
 name: Thirteenth Workflow
 on: push
 
@@ -39,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Failure Step
-        id: error-step
+        id: error-step                # по id можно порверить завершился ли шаг(см. ниже).
         run: exit 1                   # 'ВЫХОД' - имитация прерывания прогр.
       - name: Runs on Canceled
         if: ${{ cancelled() }}        # вернёт 'true' если предидущие шаги были отменены.
@@ -51,7 +52,7 @@ jobs:
         if: ${{ success() }}          # шаг удачный.
         run: echo "Runs on Success"
       - name: Runs on Failure
-        if: ${{ failure() && steps.error-step.conclusion == 'failure' }}  # шаг не удачный.
+        if: ${{ failure() && steps.error-step.conclusion == 'failure' }}  # конкретный шаг не удачный.
         run: echo "Runs on Failure"
   second-job:                         # второй 'second-job:' зависит от первого 'job:'
     runs-on: ubuntu-latest

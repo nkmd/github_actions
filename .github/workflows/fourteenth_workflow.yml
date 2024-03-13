@@ -1,0 +1,39 @@
+# №14 Кэш (caches) в GitHub Actions
+#
+# NodeJS уже установлен на виртуальной машине Github -ом.
+# Кэшируем
+#
+
+###########################
+name: Fourteenth Workflow
+on: workflow_dispatch
+
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4 # копирую файлы репозитория на виртуальную машину GitHub
+        id: cache-step            # id чтоб обратиться, далее.
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: "cache-file"      # имя файла, ключ по которому в дальнейшем находит файл с кэшем
+      - name: Display Cache      # Отобразим, чтоб увидеть.continue-on-error: 
+        run: echo '${{ steps.cache-step.outputs}}'
+      - name: Install node_modules # установка модулей node_modules
+        run: npm install
+
+# ##########################
+# name: Fourteenth Workflow
+# on: workflow_dispatch
+
+# jobs:
+#   first-job:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4 # копирую файлы репозитория на виртуальную машину GitHub
+#       - name: Use Custom Action
+#         uses: ./.github/actions/cache-node-modules
+#         with:
+#           caching: 'false'
