@@ -3,8 +3,31 @@
 # NodeJS уже установлен на виртуальной машине Github -ом.
 # Кэшируем
 #
-
 ###########################
+# Запускать дважды, на первый раз кэш создаётся, на втрой исп-ся.
+# Статический ключ 'key' - НЕ обновляет при обновлении 'node_modules' список -> package.json
+# name: Fourteenth Workflow
+# on: workflow_dispatch
+
+# jobs:
+#   first-job:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4 # копирую файлы репозитория на виртуальную машину GitHub
+#         id: cache-step            # id чтоб обратиться, далее.
+#       - name: Cache node_modules
+#         uses: actions/cache@v3
+#         with:
+#           path: ~/.npm
+#           key: "cache-file"      # ключ по которому находит файл с кэшем. Статический. НЕ обнавляет.
+#       - name: Display Cache      # Отобразим, чтоб увидеть.continue-on-error: 
+#         run: echo '${{ toJson(steps.cache-step.outputs) }}'
+#       - name: Install node_modules # установка модулей node_modules
+#         run: npm install
+
+
+# ##########################
+# Динамическй ключ, при обновлении в ноде, будит обновлять кэш.
 name: Fourteenth Workflow
 on: workflow_dispatch
 
@@ -18,13 +41,26 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: "cache-file"      # имя файла, ключ по которому в дальнейшем находит файл с кэшем
+          # ключ по которому находит файл с кэшем, и обновит кэш если есть изменения:
+          key: ${{ runner.os }}-cache-file-${{ hashFiles('../package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-cache-file-
+            ${{ runner.os }}-
       - name: Display Cache      # Отобразим, чтоб увидеть.continue-on-error: 
         run: echo '${{ toJson(steps.cache-step.outputs) }}'
       - name: Install node_modules # установка модулей node_modules
         run: npm install
 
+
+
+
+
+
+
+
+
 # ##########################
+# Динамически при обновлении ноде, будит обновлятся.
 # name: Fourteenth Workflow
 # on: workflow_dispatch
 
