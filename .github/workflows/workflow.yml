@@ -1,9 +1,8 @@
 # ШАБЛОН Для 'workflow' №17
 # 
-#
-
 ###########################################
-# v1 Просто запрашивает 'Title' и выводит его в логе
+# v1 Просто запрашивает 'Title' и выводит его в логе 
+# ТРЕТИЙ вариант. "ВСЁ В КАШУ"
 name: Reusable Workflow
 on:
   workflow_call:                       # Именно эта запись указывает что файл вызываем другим 'workflow'
@@ -13,6 +12,10 @@ on:
         type: string
         default: "Testing text title"
         required: false
+    outputs:
+      date:
+        value: ${{ jobs.generate-output.outputs.date }}
+
 jobs:
   console-log:
     runs-on: ubuntu-latest
@@ -20,9 +23,20 @@ jobs:
       - name: Print Title
         run: echo '${{ inputs.title }}'
 
+  # добавили лля 3го варианта
+  generate-output:
+    runs-on: ubuntu-latest
+    outputs:
+      date: ${{ steps.date-step.outputs.date }}
+    steps:
+      - run: echo "date=$(date)" >> $GITHUB_OUTPUT  # Дату помещаем глобально
+        id: date-step
+
 
 ###########################################
 # v2
+# перенесли в новый реп-й 'nkmd/workflows/.github/workflows/workflow.yml'
+
 # name: Reusable Workflow
 # on:
 #   workflow_call:                       # Именно эта запись указывает что файл вызываем другим 'workflow'
@@ -38,9 +52,9 @@ jobs:
 #       - name: Print Password
 #         run: echo '${{ secrets.PASSWORD }}'
 #       - name: Print GitHub
-#         run: echo '${{ toJSON(github) }}'
+#         run: echo '${{ toJSON(github) }}'   # вывод названия репозитория.
 #   checkout:
 #     runs-on: ubuntu-latest
 #     steps:
-#       - uses: actions/checkout@v4
+#       - uses: actions/checkout@v4           # Вывод списка файлов репозитория который вызывал
 #       - run: ls -a

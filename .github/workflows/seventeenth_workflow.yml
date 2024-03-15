@@ -1,46 +1,49 @@
-# № 17
+# № 17 Взаимодействия между Workflows в GitHub Actions
 #
-#      
 ###########################################
 # v1 Вызывает/запускает - 'workflow.yml' и передаёт 'title' 
-name: Seventeenth Workflow
-on: 
-  workflow_dispatch:                        # Запуск в ручную
-    inputs:
-      title:
-        description: "_Custom Title (seventeenth_workflow.yml)_"
-        type: string
-        default: "Testing text title (for workflow.yml)"
-        required: false
-jobs: 
-  call-workflow:                            # вызов 'workflow.yml' 
-    uses: ./.github/workflows/workflow.yml
-    with:
-      title: ${{ inputs.title }}
-
-
-###########################################
-# v2 
 # name: Seventeenth Workflow
 # on: 
-#   workflow_dispatch:
+#   workflow_dispatch:                        # Запуск в ручную
 #     inputs:
 #       title:
-#         description: "Custom Title"
+#         description: "_Custom Title (seventeenth_workflow.yml)_"
 #         type: string
-#         default: "Testing text title"
+#         default: "Testing text title (for workflow.yml)"
 #         required: false
-# jobs:
-#   call-workflow:
+# jobs: 
+#   call-workflow:                            # вызов 'workflow.yml' 
 #     uses: ./.github/workflows/workflow.yml
 #     with:
 #       title: ${{ inputs.title }}
-#   call-external-workflow:
-#     uses: CRIK0VA/workflows/.github/workflows/workflow.yml@main
-#     secrets:
-#       PASSWORD: ${{ secrets.PASSWORD }}
-#   display-output:
-#     runs-on: ubuntu-latest
-#     needs: call-workflow
-#     steps:
-#       - run: echo ${{ needs.call-workflow.outputs.date }}
+
+###########################################
+# v2 Вызывает/запускает - 
+# 'https://github.com/nkmd/workflows/blob/main/.github/workflows/workflow.yml' и передаёт 'PASSWORD' 
+#
+# Используем 'Secrets and variables'-> 'Repository Secrets' данного репозитория 
+# ( https://github.com/nkmd/github_actions/settings/secrets/actions )
+#
+name: Seventeenth Workflow
+on: 
+  workflow_dispatch:
+    inputs:
+      title:
+        description: "Custom Title"
+        type: string
+        default: "Testing text title"
+        required: false
+jobs:
+  call-workflow:
+    uses: ./.github/workflows/workflow.yml                        # 'workflow.yml' текушего реп-я.
+    with:
+      title: ${{ inputs.title }}
+  call-external-workflow:
+    uses: nkmd/workflows/.github/workflows/workflow.yml@main      # Репозиторий/ файл/ @ветка
+    secrets:
+      PASSWORD: ${{ secrets.PASSWORD }}                           # Передача 'secrets'
+  display-output:                                                 
+    runs-on: ubuntu-latest
+    needs: call-workflow
+    steps:
+      - run: echo ${{ needs.call-workflow.outputs.date }}         # обр. к глобальной из 'workflow.yml'
