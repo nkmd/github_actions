@@ -35,24 +35,24 @@ jobs:
       - name: Math Expression
         run: |
           value=`cat math-result.txt`           # Считываем значение из файла
-          expr $value \* 2 > math-result.txt    # Умнажаем на 2 и записываем в файл
+          expr $value \* 2 > math-result2.txt    # Умнажаем на 2 и записываем в файл
       - name: Upload result file
         uses: actions/upload-artifact@v4        # Загружаем на сервер
         with:
-          name: math-result
-          path: math-result.txt
+          name: math-result2
+          path: math-result2.txt
 
   # Считывает -'Артефакт' созданный файл c 'GitHub Actions', с результатом в консоль.
   second-job:
     runs-on: ubuntu-latest
-    needs: another-job                     # запускать последовательно, после 'another-job'
+    needs: another-job                       # запускать последовательно, после 'another-job'
     #needs: first-jobs                       # запускать последовательно, после 'first-jobs'
     steps:
       - name: Download file
         uses: actions/download-artifact@v4  # плагин загрузки из файла с 'GitHub Actions'
         with:
-          name: math-result
+          name: math-result2
       - name: Print File
         run: |
-          value=`cat math-result.txt`        # получить значение файла
+          value=`cat math-result2.txt`        # получить значение файла
           echo $value                        # отобразить на экран
