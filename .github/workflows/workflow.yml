@@ -1,0 +1,47 @@
+# ШАБЛОН Для 'workflow' №17
+# 
+#
+
+###########################################
+# v1 Просто запрашивает 'Title' и выводит его в логе
+name: Reusable Workflow
+on:
+  workflow_call:                       # Именно эта запись указывает что файл вызываем другим 'workflow'
+    inputs:
+      title:
+        description: "_Custom Title_"
+        type: string
+        default: "Testing text title"
+        required: false
+jobs:
+  console-log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Title
+        run: echo '${{ inputs.title }}'	
+
+
+				
+###########################################
+# v2
+# name: Reusable Workflow
+# on:
+#   workflow_call:                       # Именно эта запись указывает что файл вызываем другим 'workflow'
+#     secrets:
+#       PASSWORD:
+#         description: "Password Description"
+#         required: true
+
+# jobs:
+#   console-log:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Print Password
+#         run: echo '${{ secrets.PASSWORD }}'
+#       - name: Print GitHub
+#         run: echo '${{ toJSON(github) }}'
+#   checkout:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+#       - run: ls -a
