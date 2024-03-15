@@ -1,0 +1,49 @@
+# №17 Использование Matrix в GitHub Actions
+#
+# Нужен для автоматизации тестирования кода на разных версиях, на разных платформах. 
+# Например на разных версиях Node.JS
+#
+
+#################################
+# Пример замены версии по умолчанию, на "GitHub Action", на 12 ю
+# name: Sixteenth Workflow
+# on: push
+
+# jobs:
+#   testing-matrix-job:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - run: node -v
+#       - uses: actions/setup-node@v3
+#         with:
+#           node-version: 12
+#       - run: node -v
+
+################################
+name: Sixteenth Workflow
+on: push
+
+jobs:
+  testing-matrix-job:
+    continue-on-error: true                   # продолжить выполнять следующий, если в данном ошибка. 
+    strategy:                                 # Добавляем необходимую "ифраструктуру"
+      matrix:                                 # Объявляем "Matrix"
+        os: [ubuntu-latest, windows-latest]   # Тестировать на указ-ых ОС
+        node-version: [12, 14, 18]            # Тестировать на указ-ых версиях 'node.js'
+        include:                              # Добавить в тест ОС и NodeJS версий
+          - os: macos-latest
+            node-version: 17
+          - os: ubuntu-latest
+            status: active                    # Переменная 'status', для ubuntu будет передан
+        exclude:                              # Исключить из теста ОС и NodeJS версий
+          - os: ubuntu-latest
+            node-version: 14
+      fail-fast: false                        # Запуск следущего 'workflow', несм-я на ошибку тек-го.
+      max-parallel: 2                         # Сколько тестов запускать паралельно
+    runs-on: ${{ matrix.os }}
+    steps:
+      - run: node -v
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }} # Динамически передать значения  "Matrix"
+      - run: node -v
