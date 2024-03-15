@@ -2,14 +2,16 @@
 #
 # - "Артифакты" хранится на GitHub Actions - до 90 дней (или менее, указ-ся). 
 # 
-# 
+# Первый 'job' - делает вычисление формирует файл.
+# Второй 'job' - считывает, записывает новое значение, созраняет (загружает) файл.
+# Третий 'job' - получает считывает выводит на экран.
 #
 
 name: Fifteenth Workflow
 on: push
-
 jobs:
-  # Загрузим 'Артефакт' файл с результатом на сервере 'GitHub Actions'.
+
+  # Формирует 'Артефакт' файл с результатом на сервере 'GitHub Actions'.
   first-jobs:                                 # Первый 'job' создаст и загрузит артифакт
     runs-on: ubuntu-latest
     steps:
@@ -20,32 +22,34 @@ jobs:
         with:
           name: math-result                   # соответствует КЛЮЧУ (по ниму будим обращаться).
           path: math-result.txt               # путь к файлу. Какой файл добавлять в 'Артифакты'.
-  # another-job:
-  #   runs-on: ubuntu-latest
-  #   needs: first-jobs
-  #   steps:
-  #     - name: Download file
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: math-result
-  #     - name: Math Expression
-  #       run: |
-  #         value=`cat math-result.txt`
-  #         expr $value \* 2 > math-result.txt
-  #     - name: Upload result file
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: math-result
-  #         path: math-result.txt
-
-  # скачаем -'Артефакт' созданный файл c 'GitHub Actions', с результатом на ПК.
-  second-job:
+  
+  # Изменим значение в файле -'Артефакт', и загрузим потовому на сервер 'GitHub Actions'
+  another-job:
     runs-on: ubuntu-latest
-    #needs: another-job                     # запускать последовательно, после 'another-job'
-    needs: first-jobs                       # запускать последовательно, после 'first-jobs'
+    needs: first-jobs                         # запускать последовательно, после 'first-jobs'
     steps:
       - name: Download file
-        uses: actions/download-artifact@v4  # плагин загрузки на ПК файла с 'GitHub Actions'
+        uses: actions/download-artifact@v4     # Скачиваем файл
+        with:
+          name: math-result
+      - name: Math Expression
+        run: |
+          value=`cat math-result.txt`           # Считываем значение из файла
+          expr $value \* 2 > math-result.txt    # Умнажаем на 2 и записываем в файл
+      - name: Upload result file
+        uses: actions/upload-artifact@v4        # Загружаем на сервер
+        with:
+          name: math-result
+          path: math-result.txt
+
+  # Считывает -'Артефакт' созданный файл c 'GitHub Actions', с результатом в консоль.
+  second-job:
+    runs-on: ubuntu-latest
+    needs: another-job                     # запускать последовательно, после 'another-job'
+    #needs: first-jobs                       # запускать последовательно, после 'first-jobs'
+    steps:
+      - name: Download file
+        uses: actions/download-artifact@v4  # плагин загрузки из файла с 'GitHub Actions'
         with:
           name: math-result
       - name: Print File
