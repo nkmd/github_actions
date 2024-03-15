@@ -1,5 +1,7 @@
 # №14 Кэш (caches) в GitHub Actions
 #
+# - "Кэш" хранится на GitHub Actions - 7 дней, до 10Gb.
+#
 # NodeJS уже установлен на виртуальной машине Github -ом.
 # Кэшируем
 #
@@ -29,7 +31,9 @@
 #         run: npm install
 
 
+
 # ##########################
+#
 # Динамическй ключ, при обновлении в ноде, будит обновлять кэш.
 name: Fourteenth Workflow
 on: workflow_dispatch
@@ -56,14 +60,8 @@ jobs:
 
 
 
-
-
-
-
-
-
 # ##########################
-# Динамически при обновлении ноде, будит обновлятся.
+# ХЗ что за пример ?????
 # name: Fourteenth Workflow
 # on: workflow_dispatch
 

@@ -1,0 +1,50 @@
+# №15 Артифакты похож на "Кэш". Отличие:
+#
+# - "Артифакты" хранится на GitHub Actions - до 90 дней (или менее, указ-ся). 
+# 
+#
+#
+
+name: Fifteenth Workflow
+on: push
+
+jobs:
+  first-jobs:                                 # Первый 'job' создаст и загрузит артифакт
+    runs-on: ubuntu-latest
+    steps:
+      - name: Math expression
+        run: expr 2 + 2 > math-result.txt     # математическая команда с выводом в файл.
+      - name: Upload result file
+        uses: actions/upload-artifact@v3      # плагин загрузки на сервер 'Артифакта'.
+        with:
+          name: math-result                   # соответствует КЛЮЧУ (по ниму будим обращаться).
+          path: math-result.txt               # путь к файлу. Какой файл добавлять в 'Артифакты'.
+  # another-job:
+  #   runs-on: ubuntu-latest
+  #   needs: first-jobs
+  #   steps:
+  #     - name: Download file
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: math-result
+  #     - name: Math Expression
+  #       run: |
+  #         value=`cat math-result.txt`
+  #         expr $value \* 2 > math-result.txt
+  #     - name: Upload result file
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: math-result
+  #         path: math-result.txt
+  # second-job:
+  #   runs-on: ubuntu-latest
+  #   needs: another-job
+  #   steps:
+  #     - name: Download file
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: math-result
+  #     - name: Print File
+  #       run: |
+  #         value=`cat math-result.txt`
+  #         echo $value
