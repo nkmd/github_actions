@@ -15,7 +15,7 @@ jobs:
       - name: Math expression
         run: expr 2 + 2 > math-result.txt     # математическая команда с выводом в файл.
       - name: Upload result file
-        uses: actions/upload-artifact@v3      # плагин загрузки на сервер 'Артифакта'.
+        uses: actions/upload-artifact@v4      # плагин загрузки на сервер 'Артифакта'.
         with:
           name: math-result                   # соответствует КЛЮЧУ (по ниму будим обращаться).
           path: math-result.txt               # путь к файлу. Какой файл добавлять в 'Артифакты'.
