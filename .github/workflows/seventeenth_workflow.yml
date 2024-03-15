@@ -1,25 +1,22 @@
 # № 17
 #
 #      
-
 ###########################################
-# v1 Вызывает/запускает -  'workflow.yml' 
+# v1 Вызывает/запускает - 'workflow.yml' и передаёт 'title' 
 name: Seventeenth Workflow
 on: 
   workflow_dispatch:                        # Запуск в ручную
     inputs:
       title:
-        description: "_Custom Title_"
+        description: "_Custom Title (seventeenth_workflow.yml)_"
         type: string
-        default: "Testing text title"
+        default: "Testing text title (for workflow.yml)"
         required: false
 jobs: 
   call-workflow:                            # вызов 'workflow.yml' 
     uses: ./.github/workflows/workflow.yml
     with:
       title: ${{ inputs.title }}
-
-
 
 
 ###########################################

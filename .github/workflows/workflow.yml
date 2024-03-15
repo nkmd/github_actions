@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Print Title
         run: echo '${{ inputs.title }}'
+
+
 ###########################################
 # v2
 # name: Reusable Workflow
