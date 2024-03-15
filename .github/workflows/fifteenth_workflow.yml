@@ -2,20 +2,21 @@
 #
 # - "Артифакты" хранится на GitHub Actions - до 90 дней (или менее, указ-ся). 
 # 
-#
+# 
 #
 
 name: Fifteenth Workflow
 on: push
 
 jobs:
+  # Загрузим 'Артефакт' файл с результатом на сервере 'GitHub Actions'.
   first-jobs:                                 # Первый 'job' создаст и загрузит артифакт
     runs-on: ubuntu-latest
     steps:
       - name: Math expression
-        run: expr 2 + 2 > math-result.txt     # математическая команда с выводом в файл.
+        run: expr 2 + 2 > math-result.txt     # математическая команда результат с выводом в файл.
       - name: Upload result file
-        uses: actions/upload-artifact@v4      # плагин загрузки на сервер 'Артифакта'.
+        uses: actions/upload-artifact@v4      # плагин загрузки на сервер 'GitHub Actions', 'Артифакта'.
         with:
           name: math-result                   # соответствует КЛЮЧУ (по ниму будим обращаться).
           path: math-result.txt               # путь к файлу. Какой файл добавлять в 'Артифакты'.
@@ -36,15 +37,18 @@ jobs:
   #       with:
   #         name: math-result
   #         path: math-result.txt
-  # second-job:
-  #   runs-on: ubuntu-latest
-  #   needs: another-job
-  #   steps:
-  #     - name: Download file
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: math-result
-  #     - name: Print File
-  #       run: |
-  #         value=`cat math-result.txt`
-  #         echo $value
+
+  # скачаем -'Артефакт' созданный файл c 'GitHub Actions', с результатом на ПК.
+  second-job:
+    runs-on: ubuntu-latest
+    #needs: another-job                     # запускать последовательно, после 'another-job'
+    needs: first-jobs                       # запускать последовательно, после 'first-jobs'
+    steps:
+      - name: Download file
+        uses: actions/download-artifact@v4  # плагин загрузки на ПК файла с 'GitHub Actions'
+        with:
+          name: math-result
+      - name: Print File
+        run: |
+          value=`cat math-result.txt`        # получить значение файла
+          echo $value                        # отобразить на экран
