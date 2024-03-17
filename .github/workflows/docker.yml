@@ -1,0 +1,53 @@
+# ? 'workflow' №18
+# Запустим 'job' в контейнере с 'Docker'
+#
+
+##############################################
+# Пример 1.
+
+name: Docker Test
+on: push
+
+jobs:
+  test-docker-container:
+    runs-on: ubuntu-latest
+    container:                                     # указываем что хотим исп. контейнер.
+      image: node:12                               # указываем ноду нужной версии.
+      env: 
+        NODE_ENV: develpment                       # передача переменной
+      ports:                                       # передача порта
+        - 80
+    steps:                                         # шаги
+      - name: Display Node Version
+        run: node -v
+
+
+##############################################
+# Пример 2. 
+
+# name: Docker Test
+# on: push
+
+# jobs:
+#   test-docker-container:
+#     runs-on: ubuntu-latest
+#     services:
+#       customMysql:
+#         image: mysql
+#     container:                                     # указываем что хотим исп. контейнер.
+#       image: node:21-alpine3.17                    # указываем ноду нужной версии.
+#       env: 
+#         NODE_ENV: develpment                       # передача переменной
+#       ports:                                       # передача порта
+#         - 80
+#     steps:                                         # шаги
+#       - name: Display service image
+#         run: echo '${{ toJSON(job.services) }}'
+#       - name: Display Node Version
+#         run: |
+#           node -v
+#           cat /etc/os-release
+#       - name: Print new Node Version
+#         uses: docker://node:18-buster-slim
+#         with:
+#           args: -v
