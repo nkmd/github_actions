@@ -31,7 +31,7 @@ jobs:
   test-docker-container:
     runs-on: ubuntu-latest
     container:                                     # указываем что хотим исп. контейнер.
-      image: nnode:21-alpine3.17                   # указываем ноду нужной версии.
+      image: node:21-alpine3.17                   # указываем ноду нужной версии.
       env: 
         NODE_ENV: develpment                       # передача переменной
       ports:                                       # передача порта
