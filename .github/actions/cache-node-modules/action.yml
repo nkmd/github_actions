@@ -4,24 +4,24 @@
 #
 # (? 'workflow' №19. Урок № 25)
 # Вызваем его из  '..\GITHUB_ACTIONS\.github\workflows\fourteenth_workflow.yml'
-#
+############################
 
-name: 'Install and Cache Node Modules'        # имя 'Action'
-description: 'Some Description'               # описание
-inputs:
-  caching:
-    required: false
-    description: "enable or disable caching"
-    default: 'true'
-outputs:
-  status:
-    value: 'Active'
+name: "Install and Cache Node Modules" # имя 'Action'
+description: "Some Description" # описание
+inputs: # получать параметры сюда
+  caching: # переменные которые хотим получать
+    required: false # не обяз.
+    description: "enable or disable caching" # описание
+    default: "true" # значение по умолчанию
+outputs: # отправлять параметры
+  status: # переменная
+    value: "Active" # значение
     description: "Some Status"
-runs:                                         # инструкция к запуску:
-  using: 'composite'                          # ук. тип 'Action'
-  steps:                                      # шаги:
+runs: # инструкция к запуску:
+  using: "composite" # ук. тип 'Action'
+  steps: # шаги:
     - name: Cache node_modules
-      if: inputs.caching == 'true'
+      if: inputs.caching == 'true' # если значение 'true'
       id: cache-step
       uses: actions/cache@v4
       with:
@@ -29,10 +29,10 @@ runs:                                         # инструкция к запу
         key: ${{ runner.os }}-cache-file-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-cache-file-
-          ${{ runner.os }}-
+          ${{ runner.os }}-                              # конец условия 'true'
     - name: Display Cache
       run: echo '${{ toJSON(steps.cache-step.outputs) }}'
-      shell: bash                               # 'шел'указываем для каждого шага
+      shell: bash # 'шел'указываем для каждого шага
     - name: Install node_modules
       run: npm install
       shell: bash
