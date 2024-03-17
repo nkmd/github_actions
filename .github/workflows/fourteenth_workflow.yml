@@ -35,33 +35,6 @@
 # ##########################
 #
 # Динамическй ключ, при обновлении в ноде, будит обновлять кэш.
-name: Fourteenth Workflow
-on: workflow_dispatch
-
-jobs:
-  first-job:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4 # копирую файлы репозитория на виртуальную машину GitHub
-        id: cache-step            # id чтоб обратиться, далее.
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          # ключ по которому находит файл с кэшем, и обновит кэш если есть изменения:
-          key: ${{ runner.os }}-cache-file-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-cache-file-
-            ${{ runner.os }}-
-      - name: Display Cache      # Отобразим, чтоб увидеть.continue-on-error: 
-        run: echo '${{ toJson(steps.cache-step.outputs) }}'
-      - name: Install node_modules # установка модулей node_modules
-        run: npm install
-
-
-
-# ##########################
-# ХЗ что за пример ?????
 # name: Fourteenth Workflow
 # on: workflow_dispatch
 
@@ -70,7 +43,35 @@ jobs:
 #     runs-on: ubuntu-latest
 #     steps:
 #       - uses: actions/checkout@v4 # копирую файлы репозитория на виртуальную машину GitHub
-#       - name: Use Custom Action
-#         uses: ./.github/actions/cache-node-modules
+#         id: cache-step            # id чтоб обратиться, далее.
+#       - name: Cache node_modules
+#         uses: actions/cache@v3
 #         with:
-#           caching: 'false'
+#           path: ~/.npm
+#           # ключ по которому находит файл с кэшем, и обновит кэш если есть изменения:
+#           key: ${{ runner.os }}-cache-file-${{ hashFiles('**/package-lock.json') }}
+#           restore-keys: |
+#             ${{ runner.os }}-cache-file-
+#             ${{ runner.os }}-
+#       - name: Display Cache      # Отобразим, чтоб увидеть.continue-on-error: 
+#         run: echo '${{ toJson(steps.cache-step.outputs) }}'
+#       - name: Install node_modules # установка модулей node_modules
+#         run: npm install
+
+
+
+# ##########################
+# ПРИМЕР использования локального 'Action'
+# вызываем '\.github\workflows\actions\cache-node-modules\action.yml'
+name: Fourteenth Workflow
+on: workflow_dispatch
+
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4                # копирую файлы репозитория на виртуальную машину GitHub
+      - name: Use Custom Action
+        uses: ./.github/actions/cache-node-modules # указывают путь до директории, файл не нужно.
+        with:
+          caching: 'false'
