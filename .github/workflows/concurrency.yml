@@ -1,0 +1,36 @@
+# Лимитируем одновременный запуск нескольких workflow до 1-го
+# Ограничит запуск одного и тогоже 'workflow' однавременно.
+#######################################
+
+
+
+#######################################
+# выполнит копии: первый, последний в статус ожидания поместит, промежуточные проигнорит.
+#######################################
+# name: Concurrency Testing
+# on: workflow_dispatch
+# concurrency: concurrency-testing  # Обявляет - только один 'workflow' выполнятя в данный момент
+# jobs:
+#   test-timeout:
+#     runs-on: ubuntu-latest
+#     steps: 
+#       - name: Some Step
+#         run: sleep 50            # 50 секунд на шаг
+#         timeout-minutes: 1
+
+
+#######################################
+# выполнит копии: только последний, остольные проигнорит.
+#######################################
+name: Concurrency Testing
+on: workflow_dispatch
+concurrency:                     # Обявляет - только один 'workflow' выполнятя в данный момент
+  group: concurrency-testing     # ID назначен группе
+  cancel-in-progress: true       # отменяет все предидущие и запускать последний
+jobs:
+  test-timeout:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Some Step
+        run: sleep 50            # 50 секунд на шаг
+        timeout-minutes: 1
