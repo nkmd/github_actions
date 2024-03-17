@@ -5,6 +5,25 @@
 ##############################################
 # Пример 1.
 
+# name: Docker Test
+# on: push
+
+# jobs:
+#   test-docker-container:
+#     runs-on: ubuntu-latest
+#     container:                                     # указываем что хотим исп. контейнер.
+#       image: node:12                               # указываем ноду нужной версии.
+#       env: 
+#         NODE_ENV: develpment                       # передача переменной
+#       ports:                                       # передача порта
+#         - 80
+#     steps:                                         # шаги
+#       - name: Display Node Version
+#         run: node -v
+
+##############################################
+# Пример 2.
+
 name: Docker Test
 on: push
 
@@ -12,18 +31,20 @@ jobs:
   test-docker-container:
     runs-on: ubuntu-latest
     container:                                     # указываем что хотим исп. контейнер.
-      image: node:12                               # указываем ноду нужной версии.
+      image: nnode:21-alpine3.17                   # указываем ноду нужной версии.
       env: 
         NODE_ENV: develpment                       # передача переменной
       ports:                                       # передача порта
         - 80
     steps:                                         # шаги
       - name: Display Node Version
-        run: node -v
+        run: | 
+          node -v
+          cat /etc/os-release                      # вывод OS
 
 
 ##############################################
-# Пример 2. 
+# Пример 3. 
 
 # name: Docker Test
 # on: push
